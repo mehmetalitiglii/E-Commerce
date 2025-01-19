@@ -11,26 +11,12 @@ public class Category
     public int CategoryID { get; set; }
     public int ParentID { get; set; }
 
-    [StringLength(50,ErrorMessage ="Maksimum 50 karakter girebilirsiniz.")]
+    [StringLength(50, ErrorMessage = "Maksimum 50 karakter girebilirsiniz.")]
     [Required(ErrorMessage = "Kategori Adı Zorunlu Alan")]
     [DisplayName("Kategori Adı")]
     public string? CategoryName { get; set; }
 
     [DisplayName("Aktif-Pasif")]
     public bool? IsActive { get; set; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

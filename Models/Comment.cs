@@ -13,10 +13,4 @@ public class Comment
     [StringLength(150)]
     public string? CommentText { get; set; }
     public DateTime? CommentDate { get; set; }
-
-
-
-
-
-
 }

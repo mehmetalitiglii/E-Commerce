@@ -23,14 +23,16 @@ public class Product
 
     [DisplayName("Kategori")]
     public int CategoryID { get; set; }
+
     [DisplayName("Marka")]
-    public int SupplierID { get; set; }
+    public int SupplierID { get; set; } 
+    
     [DisplayName("Stok")]
     public int Stock { get; set; }
 
     [DisplayName("İndirim")]
     public int Discount { get; set; }
-
+       
     [DisplayName("Durum")]
     public int StatusID { get; set; }
 
@@ -54,17 +56,15 @@ public class Product
     public int HighLighted { get; set; } //Öne Çıkan Ürünler
 
     public int TopSeller { get; set; } //Çok Satan Ürünler
+
     [DisplayName("Bu Ürüne Bakanlar")]
-
     public int Related { get; set; } //Benzer Ürünler
+
     [DisplayName("Notlar")]
-
     public string? Notes { get; set; } //Notlar
-    [DisplayName("Fotoğraf")]
 
+    [DisplayName("Fotoğraf")]
     public string? PhotoPath { get; set; } //Fotoğraf Yolu
 
     public bool? IsActive { get; set; } //Boolean Değer
-
-
 }

@@ -19,10 +19,7 @@ public class Order
 
     public int ProductID { get; set; }
 
+
+    // var UserOrder = Order.Where(x => x.UserID == User.UserID)
     public int Quantity { get; set; }
-
-
-
-
-
 }

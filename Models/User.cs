@@ -34,6 +34,4 @@ public class User
     public bool? IsAdmin { get; set; }
 
     public bool? Active { get; set; }
-
-
 }

@@ -15,6 +15,4 @@ public class Supplier
     public string? PhotoPath { get; set; }
 
     public bool? IsActive { get; set; }
-
-
 }
