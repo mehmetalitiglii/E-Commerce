@@ -1,0 +1,128 @@
+﻿@{
+  Layout = "~/Views/Shared/_AdminLayout.cshtml";
+  @model IEnumerable<Category>
+
+}
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <p>
+      <a asp-action="CategoryCreate" asp-controller="Admin" class="btn btn-success">
+        Yeni Kategori
+
+      </a>
+    </p>
+    <!-- BEGIN SAMPLE TABLE PORTLET-->
+    <div class="portlet box red">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-cogs"></i>Kategoriler
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse">
+          </a>
+          <a href="#portlet-config" data-toggle="modal" class="config">
+          </a>
+          <a href="javascript:;" class="reload">
+          </a>
+          <a href="javascript:;" class="remove">
+          </a>
+        </div>
+      </div>
+
+      @* <span class="label label-sm label-success">Approved</span> *@
+      @* <span class="label label-sm label-danger">Blocked</span>   *@
+
+      <div class="portlet-body">
+        <div class="table-scrollable">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.CategoryID)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.CategoryName)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.IsActive)
+                </th>
+
+                <th></th>
+
+                <th></th>
+
+                <th></th>
+
+              </tr>
+            </thead>
+            <tbody>
+
+              @foreach (var item in Model.Where(c => c.ParentID == 0))
+              {
+                <tr>
+                  <td>
+                    @Html.DisplayFor(Model => item.CategoryID)
+                  </td>
+                  <td>
+                    @Html.DisplayFor(Model => item.CategoryName)
+                  </td>
+                  <td>
+                    <input type="checkbox" name="IsActive" @(item.IsActive.HasValue && item.IsActive.Value ? "checked" : "") disabled />
+                  </td>
+                  <td>
+                      <a asp-action="CategoryEdit" asp-route-id="@item.CategoryID" class="btn btn-primary">
+                          DÜZENLE
+                      </a>
+                  </td>
+                  <td>
+                      <a asp-action="CategoryDetails" asp-route-id="@item.CategoryID" class="btn btn-info">
+                          DETAY
+                      </a>
+                  </td>
+                  <td>
+                    <a asp-action="CategoryDelete" asp-route-id="@item.CategoryID" class="btn btn-danger">
+                      SİL
+                    </a>
+                  </td>
+                </tr>
+
+                foreach (var subitem in Model.Where(x => x.ParentID == item.CategoryID))
+                {
+                  <tr>
+                    <td>
+                      @Html.DisplayFor(Model => subitem.CategoryID)
+                    </td>
+                    <td style="padding-left: 20px;">
+
+                      @Html.DisplayFor(Model => subitem.CategoryName)
+                    </td>
+                    <td>
+                      <input type="checkbox" name="IsActive" @(subitem.IsActive.HasValue && subitem.IsActive.Value ? "checked" : "") disabled />
+                    </td>
+                    <td>
+                      <a asp-action="CategoryEdit" asp-route-id="@subitem.CategoryID" class="btn btn-primary">
+                        DÜZENLE
+                      </a>
+                    </td>
+                    <td>
+                      <a asp-action="CategoryDetails" asp-route-id="@subitem.CategoryID" class="btn btn-info">
+                        DETAY
+                      </a>
+                    </td>
+                    <td>
+                      <a asp-action="CategoryDelete" asp-route-id="@subitem.CategoryID" class="btn btn-danger">
+                        SİL
+                      </a>
+                    </td>
+                  </tr>
+                }
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- END SAMPLE TABLE PORTLET-->
+  </div>
+</div>

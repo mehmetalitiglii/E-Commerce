@@ -1,0 +1,62 @@
+﻿@Model Category
+@{
+  Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- BEGIN SAMPLE FORM PORTLET-->
+<div class="row">
+  <div class="col-md2"></div>
+  <div class="col-md-8">
+    <div class="portlet box purple ">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-gift"></i> Kategori Giriş Formu
+        </div>
+        <div class="tools">
+          <a href="" class="collapse">
+          </a>
+          <a href="#portlet-config" data-toggle="modal" class="config">
+          </a>
+          <a href="" class="reload">
+          </a>
+          <a href="" class="remove">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body form">
+        <form class="form-horizontal" role="form" action="/Admin/CategoryCreate" method="post">
+          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          <div class="form-body">
+
+            @*form-control input-lg*@
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Ana Kategori Seçiniz</label>
+              <div class="col-md-9">
+                @Html.DropDownList(
+                       "ParentID",
+                       (IEnumerable<SelectListItem>?)ViewData["CategoryList"], "Seçiniz",
+                       new { @class = "form-control input-lg" }
+                       )
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Large Input</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control input-lg" placeholder="Large Input">
+              </div>
+            </div>
+
+          </div>
+          <div class="form-actions right1">
+            <button type="button" class="btn default">Cancel</button>
+            <button type="submit" class="btn green">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- END SAMPLE FORM PORTLET-->
