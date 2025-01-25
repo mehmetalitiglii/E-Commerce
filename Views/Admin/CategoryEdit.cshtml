@@ -1,9 +1,9 @@
-﻿@model Category
+﻿@model Category;
 @{
+  ViewData["Title"] = "Kategori Düzenle";
   Layout = "~/Views/Shared/_AdminLayout.cshtml";
-  ViewData["Title"] = "Kategori Ekle";
-
 }
+
 
 <!-- BEGIN SAMPLE FORM PORTLET-->
 <div class="row">
@@ -12,7 +12,7 @@
     <div class="portlet box purple ">
       <div class="portlet-title">
         <div class="caption">
-          <i class="fa fa-gift"></i> Kategori Giriş Formu
+          <i class="fa fa-gift"></i> Kategori Güncelleme Formu
         </div>
         <div class="tools">
           <a href="" class="collapse">
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="portlet-body form">
-        <form class="form-horizontal" role="form" action="/Admin/CategoryCreate" method="post">
+        <form class="form-horizontal" role="form" action="/Admin/CategoryEdit" method="post">
           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
           <div class="form-body">
 
@@ -63,9 +63,11 @@
             </div>
 
           </div>
+         
+          <input type="hidden" asp-for="CategoryID"/>
           <div class="form-actions right">
               <a asp-action="CategoryIndex" class="btn btn-primary">Kategori Listesi</a>
-              <input type="submit" value="KAYDET" class="btn btn-success" />
+              <input type="submit" value="GÜNCELLE" class="btn btn-success" />
           </div>
         </form>
       </div>

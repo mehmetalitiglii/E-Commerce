@@ -1,0 +1,40 @@
+﻿@{
+  Layout = "~/Views/Shared/_AdminLayout.cshtml";
+  @model Category;
+  ViewData["Title"] = "Delete Category";
+}
+
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+     <!-- BEGIN SAMPLE TABLE PORTLET-->
+    <div class="portlet box red">
+      <div class="portlet-body">
+        <div class="table-scrollable">
+          <table class="table table-dark table-hover">
+            <thead>
+              <tr>
+                <th>
+                  @Html.DisplayFor(Model => Model.CategoryID)
+                </th>
+                <th>
+                  @Html.DisplayFor(Model => Model.CategoryName)
+                </th>
+                <th>
+                  @Html.DisplayFor(Model => Model.IsActive)
+                </th>
+
+              </tr>
+            </thead>
+          </table>
+          <form asp-action="CategoryDelete" method="post">
+              <input type="hidden" asp-for="CategoryID"/>
+              <input type="submit" value="SİL" class="btn btn-danger" onclick="return confirm('Silmek istediğinize emin misiniz?')"/>
+              <a asp-action="CategoryIndex" class="btn btn-success">Kategori Listesi</a>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- END SAMPLE TABLE PORTLET-->
+  </div>
+</div>

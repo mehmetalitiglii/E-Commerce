@@ -1,7 +1,7 @@
 ﻿@{
   Layout = "~/Views/Shared/_AdminLayout.cshtml";
   @model IEnumerable<Category>
-
+  ViewData["Title"] = "Kategori Listesi";
 }
 <div class="row">
   <div class="col-md-2"></div>
@@ -60,15 +60,15 @@
 
               @foreach (var item in Model.Where(c => c.ParentID == 0))
               {
-                <tr>
+                <tr ->
                   <td>
                     @Html.DisplayFor(Model => item.CategoryID)
                   </td>
                   <td>
-                    @Html.DisplayFor(Model => item.CategoryName)
+                    &nbsp;&nbsp; @Html.DisplayFor(Model => item.CategoryName)
                   </td>
                   <td>
-                    <input type="checkbox" name="IsActive" @(item.IsActive.HasValue && item.IsActive.Value ? "checked" : "") disabled />
+                    <input type="checkbox" name="IsActive" @(item.IsActive ? "checked" : "") disabled />
                   </td>
                   <td>
                       <a asp-action="CategoryEdit" asp-route-id="@item.CategoryID" class="btn btn-primary">
@@ -98,7 +98,7 @@
                       @Html.DisplayFor(Model => subitem.CategoryName)
                     </td>
                     <td>
-                      <input type="checkbox" name="IsActive" @(subitem.IsActive.HasValue && subitem.IsActive.Value ? "checked" : "") disabled />
+                      <input type="checkbox" name="IsActive" @(subitem.IsActive ? "checked" : "") disabled />
                     </td>
                     <td>
                       <a asp-action="CategoryEdit" asp-route-id="@subitem.CategoryID" class="btn btn-primary">

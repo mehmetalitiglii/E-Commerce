@@ -17,6 +17,6 @@ public class Category
     public string? CategoryName { get; set; }
 
     [DisplayName("Aktif-Pasif")]
-    public bool? IsActive { get; set; }
+    public bool IsActive { get; set; }
 
 }

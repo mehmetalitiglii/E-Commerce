@@ -9,7 +9,7 @@ public class cls_category
     E_CommerceDbContext _context = new E_CommerceDbContext();
 
 
-    #region GET METHODS 
+
 
     //Bütün kategorileri liste olarak döner(asenkron)
     public async Task<List<Category>> GetCategoriesAsync()
@@ -25,12 +25,84 @@ public class cls_category
         return categories;
     }
 
-    #endregion
+
+    public static bool CategoryInsert(Category category)
+    {
+        //metod statik olduğu için _context nesnesi doğrudan oluşturulamaz. Bu yüzden _context nesnesi oluşturulur yada using kullanılır.
+
+        //E_CommerceDbContext _context = new E_CommerceDbContext(); YADA
+        using (E_CommerceDbContext _context = new())
+        {
+            try
+            {
+                _context.categories.Add(category);
+                _context.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+    }
 
 
-    #region POST METHODS
+    public async Task<Category?> GetCategoryDetailsAsync(int? id)
+    {
+        Category? Category = await
+                _context
+                .categories
+                .FirstOrDefaultAsync(
+                    x => x.CategoryID == id
+                    );
+
+        return Category;
+    }
 
 
-    #endregion
+
+    public static bool CategoryUpdate(Category category)
+    {
+        using (E_CommerceDbContext _context = new())
+        {
+            try
+            {
+                _context.Update(category);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+    }
+
+    public static bool CategoryDelete(int catID)
+    {
+        using (E_CommerceDbContext _context = new())
+        {
+            try
+            {
+
+
+
+
+                //_context.Update(category);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+    }
+
+
+
 
 }

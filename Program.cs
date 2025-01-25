@@ -1,7 +1,17 @@
+using System.Text.Unicode;
+using System.Text.Encodings.Web;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Alert ekranýndaki Türkçe karakterleri göstermek için
+builder.Services.AddWebEncoders(options =>
+{
+    options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All);
+});
+
 
 var app = builder.Build();
 
