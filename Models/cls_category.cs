@@ -86,11 +86,19 @@ public class cls_category
         {
             try
             {
+                Category? category = _context
+                    .categories
+                    .FirstOrDefault(x => x.CategoryID == catID);
+
+                category!.IsActive = false;
+               List<Category> subCategories = _context.categories.Where(x => x.ParentID == catID).ToList();
 
 
+                foreach (var item in subCategories)
+                {
+                    item.IsActive = false;
+                }
 
-
-                //_context.Update(category);
                 _context.SaveChanges();
                 return true;
             }

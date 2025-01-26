@@ -10,13 +10,14 @@ public class AdminController : Controller
 {
     cls_User u = new cls_User();
     cls_category c = new cls_category();
+    cls_supplier s = new cls_supplier();
     E_CommerceDbContext _context = new E_CommerceDbContext();
 
     public IActionResult Login()
     {
 
-        return View();
 
+        return View();
     }
 
     [HttpPost]
@@ -104,7 +105,7 @@ public class AdminController : Controller
 
         }
         var category = await c.GetCategoryDetailsAsync(id);
-        
+
         return View(category);
     }
 
@@ -174,4 +175,41 @@ public class AdminController : Controller
 
         return RedirectToAction("CategoryDelete");
     }
+
+
+    public async Task<IActionResult> SupplierIndex()
+    {
+        List<Supplier> supliers = await s.GetSuppliersAsync();
+        return View(supliers);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> SupplierCreate(int id)
+    {
+
+        return View();
+    }
+
+
+    [HttpPost]
+    public IActionResult SupplierCreate(Supplier supplier)
+    {
+        bool answer = cls_supplier.SupplierInsert(supplier);
+
+        if (answer)
+        {
+            TempData["Message"] = "Marka Ekleme Başarılı";
+
+        }
+        else
+        {
+            TempData["Message"] = "HATA! Marka Ekleme Başarısız";
+        }
+        return RedirectToAction("SupplierCreate");
+    }
+
+
+
+
+
 }
