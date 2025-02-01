@@ -12,6 +12,7 @@ public class AdminController : Controller
     cls_category c = new cls_category();
     cls_supplier s = new cls_supplier();
     E_CommerceDbContext _context = new E_CommerceDbContext();
+    cls_status st = new cls_status();
 
     public IActionResult Login()
     {
@@ -207,6 +208,223 @@ public class AdminController : Controller
         }
         return RedirectToAction("SupplierCreate");
     }
+
+
+    [HttpGet]
+    public async Task<IActionResult> SupplierEdit(int id)
+    {
+        if (id == null || _context.suppliers == null)
+        {
+            return NotFound();
+
+        }
+        var suppliers = await s.GetSupplierDetailsAsync(id);
+
+        return View(suppliers);
+    }
+
+
+    [HttpPost]
+    public IActionResult SupplierEdit(Supplier supplier)
+    {
+        if (supplier.PhotoPath == null)
+        {
+            //Foto değiştirmezse eski fotoyu al
+            string? photoPath = _context.suppliers.FirstOrDefault(x => x.SupplierID == supplier.SupplierID)?.PhotoPath;
+            supplier.PhotoPath = photoPath;
+        }
+        else
+        {
+
+        }
+
+
+        bool answer = cls_supplier.SupplierUpdate(supplier);
+
+        if (answer)
+        {
+            TempData["Message"] = supplier.BrandName?.ToUpper() + " Markası Güncellendi";
+        }
+        else
+        {
+            TempData["Message"] = "HATA! Marka Güncelleme Başarısız";
+        }
+
+        return RedirectToAction("SupplierIndex");
+    }
+
+
+
+    public async Task<IActionResult> SupplierDetails(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+        var supplier = await s.GetSupplierDetailsAsync(id);
+        ViewBag.supplier = supplier?.BrandName;
+        return View(supplier);
+    }
+
+
+
+    [HttpGet]
+    public async Task<IActionResult> SupplierDelete(int? id)
+    {
+
+        if (id == null || _context.suppliers == null)
+        {
+            return NotFound();
+        }
+
+        var supplier = await _context
+            .suppliers
+            .FirstOrDefaultAsync(x => x.SupplierID == id);
+
+        if (supplier == null)
+        {
+            return NotFound();
+        }
+        return View(supplier);
+    }
+
+
+    [HttpPost, ActionName("SupplierDelete")]
+    public async Task<IActionResult> SupplierDeleteConfirmed(int id)
+    {
+        bool answer = cls_supplier.SupplierDelete(id);
+
+        if (answer)
+        {
+            TempData["Message"] = "Marka Silindi";
+            return RedirectToAction("SupplierIndex");
+        }
+        else
+        {
+            TempData["Message"] = "HATA! Marka Silinemedi";
+        }
+
+        return RedirectToAction("SupplierDelete");
+    }
+
+
+    public async Task<IActionResult> StatusIndex(int id)
+    {
+        List<Status> statuses = await st.GetStatusesAsync(id);
+        return View(statuses);
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> StatusCreate(int id)
+    {
+
+        return View();
+    }
+
+
+    [HttpPost]
+    public IActionResult StatusCreate(Status status)
+    {
+        bool answer =  cls_status.StatusInsert(status);
+
+        if (answer)
+        {
+            TempData["Message"] = "Durum Ekleme Başarılı";
+
+        }
+        else
+        {
+            TempData["Message"] = "HATA! Durum Ekleme Başarısız";
+        }
+        return RedirectToAction(nameof(StatusCreate));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> StatusEdit(int? id)
+    {
+        if (id == null || _context.statuses == null)
+        {
+            return NotFound();
+
+        }
+        var status = await st.GetStatusDetailsAsync(id);
+
+        return View(status);
+    }
+
+
+    [HttpPost]
+    public IActionResult StatusEdit(Status status)
+    {
+
+        bool answer = cls_status.StatusUpdate(status);
+
+        if (answer)
+        {
+            TempData["Message"] = status.StatusName?.ToUpper() + " Güncellendi";
+        }
+        else
+        {
+            TempData["Message"] = "HATA! Güncelleme Başarısız";
+        }
+
+        return RedirectToAction("StatusIndex");
+    }
+
+
+    public async Task<IActionResult> StatusDetails(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+        var status = await st.GetStatusDetailsAsync(id);
+        ViewBag.status = status.StatusName;
+        return View(status);
+    }
+
+
+
+    [HttpGet]
+    public async Task<IActionResult> StatusDelete(int? id)
+    {
+
+        if (id == null || _context.statuses == null)
+        {
+            return NotFound();
+        }
+
+        var status = await _context
+            .statuses
+            .FirstOrDefaultAsync(x => x.StatusID == id);
+
+        if (status == null)
+        {
+            return NotFound();
+        }
+        return View(status);
+    }
+
+
+    [HttpPost, ActionName("StatusDelete")]
+    public async Task<IActionResult> StatusDeleteConfirmed(int id)
+    {
+        bool answer = cls_status.StatusDelete(id);
+
+        if (answer)
+        {
+            TempData["Message"] = "Durum Silindi";
+            return RedirectToAction("StatusIndex");
+        }
+        else
+        {
+            TempData["Message"] = "HATA! Durum Silinemedi";
+        }
+
+        return RedirectToAction("StatusDelete");
+    }
+
 
 
 

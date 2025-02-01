@@ -1,0 +1,98 @@
+﻿@{
+  Layout = "~/Views/Shared/_AdminLayout.cshtml";
+  @model IEnumerable<Status>
+  ViewData["Title"] = "Durum Listesi";
+}
+
+
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <p>
+      <a asp-action="StatusCreate" asp-controller="Admin" class="btn btn-success">
+        Yeni Durum
+      </a>
+    </p>
+    <!-- BEGIN SAMPLE TABLE PORTLET-->
+    <div class="portlet box red">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-cogs"></i>Durum Listesi
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse">
+          </a>
+          <a href="#portlet-config" data-toggle="modal" class="config">
+          </a>
+          <a href="javascript:;" class="reload">
+          </a>
+          <a href="javascript:;" class="remove">
+          </a>
+        </div>
+      </div>
+
+      @* <span class="label label-sm label-success">Approved</span> *@
+      @* <span class="label label-sm label-danger">Blocked</span>   *@
+
+      <div class="portlet-body">
+        <div class="table-scrollable">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.StatusID)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.StatusName)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.IsActive)
+                </th>
+
+                <th></th>
+
+                <th></th>
+
+                <th></th>
+
+              </tr>
+            </thead>
+            <tbody>
+
+              @foreach (var item in Model)
+              {
+                <tr ->
+                  <td>
+                    @Html.DisplayFor(Model => item.StatusID)
+                  </td>
+                  <td>
+                    &nbsp;&nbsp; @Html.DisplayFor(Model => item.StatusName)
+                  </td>
+                  <td>
+                    <input type="checkbox" name="IsActive" @(item.IsActive ? "checked" : "") disabled />
+                  </td>
+                  <td>
+                    <a asp-action="StatusEdit" asp-route-id="@item.StatusID" class="btn btn-primary">
+                      DÜZENLE
+                    </a>
+                  </td>
+                  <td>
+                    <a asp-action="StatusDetails" asp-route-id="@item.StatusID" class="btn btn-info">
+                      DETAY
+                    </a>
+                  </td>
+                  <td>
+                    <a asp-action="StatusDelete" asp-route-id="@item.StatusID" class="btn btn-danger">
+                      SİL
+                    </a>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- END SAMPLE TABLE PORTLET-->
+  </div>
+</div>

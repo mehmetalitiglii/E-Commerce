@@ -1,0 +1,79 @@
+﻿@model Status
+@{
+  Layout = "~/Views/Shared/_AdminLayout.cshtml";
+  ViewData["Title"] = "Durum Detay";
+}
+
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <!-- BEGIN SAMPLE TABLE PORTLET-->
+    <div class="portlet box green">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-cogs"></i> <span>@ViewBag.status </span>Durum Detay
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse">
+          </a>
+          <a href="#portlet-config" data-toggle="modal" class="config">
+          </a>
+          <a href="javascript:;" class="reload">
+          </a>
+          <a href="javascript:;" class="remove">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body flip-scroll">
+        <table class="table table-bordered table-striped table-condensed flip-content">
+          <thead class="flip-content">
+            <tr>
+              <th width="30%">
+                Key
+              </th>
+              <th>
+                Value
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.StatusID)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.StatusID)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.StatusName)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.StatusName)
+              </td>
+            </tr>
+
+           
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.IsActive)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.IsActive)
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <div class="form-actions right">
+          <a asp-action="StatusIndex" class="btn btn-primary">Durum Listesi</a>
+        </div>
+
+      </div>
+    </div>
+    <!-- END SAMPLE TABLE PORTLET-->
+  </div>
+</div>

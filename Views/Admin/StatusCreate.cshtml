@@ -1,0 +1,61 @@
+﻿@{
+  Layout = "~/Views/Shared/_AdminLayout.cshtml";
+  @model Status
+  ViewData["Title"] = "Durum Ekle";
+}
+
+<div class="row">
+  <div class="col-md2"></div>
+  <div class="col-md-8">
+    <div class="portlet box purple ">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-gift"></i> Durum Giriş Formu
+        </div>
+        <div class="tools">
+          <a href="" class="collapse">
+          </a>
+          <a href="#portlet-config" data-toggle="modal" class="config">
+          </a>
+          <a href="" class="reload">
+          </a>
+          <a href="" class="remove">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body form">
+        <form class="form-horizontal" role="form" action="/Admin/StatusCreate" method="post">
+          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          <div class="form-body">
+
+            @*form-control input-lg*@
+
+
+
+            <div class="form-group">
+              <label asp-for="StatusName" class="col-md-3 control-label"></label>
+
+              <div class="col-md-9">
+                <input asp-for="StatusName" class="form-control input-lg" placeholder="Marka Adı" required maxlength="100">
+              </div>
+              <span asp-validation-for="StatusName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="IsActive" class="col-md-3 control-label">Aktif</label>
+
+              <div class="col-md-9">
+                <input asp-for="IsActive" class="form-control input-lg" />
+              </div>
+            </div>
+
+          </div>
+          <div class="form-actions right">
+            <a asp-action="StatusIndex" class="btn btn-primary">Marka Listesi</a>
+            <input type="submit" value="KAYDET" class="btn btn-success" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

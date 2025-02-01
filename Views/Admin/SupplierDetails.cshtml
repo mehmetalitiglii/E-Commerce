@@ -1,0 +1,88 @@
+﻿@model Supplier
+@{
+  Layout = "~/Views/Shared/_AdminLayout.cshtml";
+  ViewData["Title"] = "Marka Detay";
+}
+
+
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <!-- BEGIN SAMPLE TABLE PORTLET-->
+    <div class="portlet box green">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-cogs"></i> <span>@ViewBag.supplier </span>Marka Detay
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse">
+          </a>
+          <a href="#portlet-config" data-toggle="modal" class="config">
+          </a>
+          <a href="javascript:;" class="reload">
+          </a>
+          <a href="javascript:;" class="remove">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body flip-scroll">
+        <table class="table table-bordered table-striped table-condensed flip-content">
+          <thead class="flip-content">
+            <tr>
+              <th width="30%">
+                Key
+              </th>
+              <th>
+                Value
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.SupplierID)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.SupplierID)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.BrandName)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.BrandName)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.PhotoPath)
+              </td>
+              <td>
+                <img src="~/resimler/@Model.PhotoPath" height="35px" width="60" />
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.IsActive)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.IsActive)
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <div class="form-actions right">
+          <a asp-action="SupplierIndex" class="btn btn-primary">Marka Listesi</a>
+        </div>
+
+      </div>
+    </div>
+    <!-- END SAMPLE TABLE PORTLET-->
+  </div>
+</div>

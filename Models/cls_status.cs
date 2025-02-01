@@ -1,18 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
-namespace E_Commerce_Website_Project.Models;
 
-public class cls_supplier
+namespace E_Commerce_Website_Project.Models;
+public class cls_status
 {
+
     E_CommerceDbContext _context = new E_CommerceDbContext();
 
-
-    public async Task<List<Supplier>> GetSuppliersAsync()
+    public async Task<List<Status>> GetStatusesAsync(int? id)
     {
-        List<Supplier> suppliers = await _context.suppliers.ToListAsync();
-        return suppliers;
+        List<Status> statuses = await _context.statuses.ToListAsync();
+        return statuses;
     }
 
-    public static bool SupplierInsert(Supplier supplier)
+    public static bool StatusInsert(Status status)
     {
         //metod statik olduğu için _context nesnesi doğrudan oluşturulamaz. Bu yüzden _context nesnesi oluşturulur yada using kullanılır.
 
@@ -21,7 +21,7 @@ public class cls_supplier
         {
             try
             {
-                _context.suppliers.Add(supplier);
+                _context.statuses.Add(status);
                 _context.SaveChanges();
                 return true;
 
@@ -33,26 +33,50 @@ public class cls_supplier
         }
     }
 
-    public async Task<Supplier?> GetSupplierDetailsAsync(int? id)
+
+    public async Task<Status?> GetStatusDetailsAsync(int? id)
     {
-        Supplier? supplier = await
+        Status? status = await
                 _context
-                .suppliers
+                .statuses
                 .FirstOrDefaultAsync(
-                    x => x.SupplierID == id
+                    x => x.StatusID == id
                     );
 
-        return supplier;
+        return status;
     }
 
 
-    public static bool SupplierUpdate(Supplier supplier)
+    public static bool StatusUpdate(Status status)
     {
         using (E_CommerceDbContext _context = new())
         {
             try
             {
-                _context.Update(supplier);
+                _context.Update(status);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+    }
+
+    public static bool StatusDelete(int stID)
+    {
+        using (E_CommerceDbContext _context = new())
+        {
+            try
+            {
+                Status? status = _context
+                    .statuses
+                    .FirstOrDefault(x => x.StatusID == stID);
+
+                status!.IsActive = false;
+
                 _context.SaveChanges();
                 return true;
             }
@@ -65,28 +89,6 @@ public class cls_supplier
     }
 
 
-    public static bool SupplierDelete(int supID)
-    {
-        using (E_CommerceDbContext _context = new())
-        {
-            try
-            {
-                Supplier? supplier = _context
-                    .suppliers
-                    .FirstOrDefault(x => x.SupplierID == supID);
 
-                supplier!.IsActive = false;
-               
-                _context.SaveChanges();
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
-        }
-    }
 
 }
-
