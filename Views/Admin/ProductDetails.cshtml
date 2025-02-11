@@ -1,0 +1,198 @@
+﻿@model Product;
+@{
+  ViewData["Title"] = "Ürün Detaylar";
+  Layout = "~/Views/Shared/_AdminLayout.cshtml";
+  E_CommerceDbContext db = new E_CommerceDbContext();
+}
+
+
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <!-- BEGIN SAMPLE TABLE PORTLET-->
+    <div class="portlet box green">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-cogs"></i> <span>@ViewBag.product</span> Ürün Detay
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse">
+          </a>
+          <a href="#portlet-config" data-toggle="modal" class="config">
+          </a>
+          <a href="javascript:;" class="reload">
+          </a>
+          <a href="javascript:;" class="remove">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body flip-scroll">
+        <table class="table table-bordered table-striped table-condensed flip-content">
+          <thead class="flip-content">
+            <tr>
+              <th width="30%">
+                Key
+              </th>
+              <th>
+                Value
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.ProductID)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.ProductID)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.UnitPrice)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.CategoryID)
+              </td>
+              <td>
+                @{
+                  string? categoryName = db.categories
+                  .FirstOrDefault(x => x.CategoryID == Model.CategoryID)?.CategoryName;
+                  @categoryName
+                }
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.SupplierID)
+              </td>
+              <td>
+                @{
+                  string? brandName = db.suppliers
+                  .FirstOrDefault(x => x.SupplierID == Model.SupplierID)?.BrandName;
+                  @brandName
+                }
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.UnitPrice) TL
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.Stock)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.Stock)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.Discount)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.Discount)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.StatusID)
+              </td>
+              <td>
+                @{
+                  string? StatusName = db.statuses
+                  .FirstOrDefault(x => x.StatusID == Model.StatusID)?.StatusName;
+                  @StatusName
+                }
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.Keywords)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.Keywords)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.Kdv)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.Kdv)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.Related)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.Related)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.Notes)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.Notes)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.AddDate)
+              </td>
+              <td>
+                @Html.DisplayFor(model => model.AddDate)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                @Html.DisplayNameFor(model => model.PhotoPath)
+              </td>
+              <td>
+                <img src="~/resimler/@Model.PhotoPath" width="100" style="height: auto;" />
+              </td>
+            </tr>
+
+          <td>
+           Aktif mi? <input type="checkbox" name="IsActive" @(Model.IsActive ? "checked" : "") disabled />
+           
+          </td>
+          </tbody>
+        </table>
+
+        <a asp-action="ProductEdit" asp-route-id="@Model.ProductID" class="btn btn-primary">
+          DÜZENLE
+        </a>
+        <a asp-action="ProductDelete" asp-route-id="@Model.ProductID" class="btn btn-danger">
+          SİL
+        </a>
+
+      </div>
+    </div>
+    <!-- END SAMPLE TABLE PORTLET-->
+  </div>
+</div>

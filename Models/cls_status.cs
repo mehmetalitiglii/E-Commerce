@@ -6,7 +6,7 @@ public class cls_status
 
     E_CommerceDbContext _context = new E_CommerceDbContext();
 
-    public async Task<List<Status>> GetStatusesAsync(int? id)
+    public async Task<List<Status>> GetStatusesAsync()
     {
         List<Status> statuses = await _context.statuses.ToListAsync();
         return statuses;

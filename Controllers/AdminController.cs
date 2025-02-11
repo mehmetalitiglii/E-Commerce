@@ -13,6 +13,7 @@ public class AdminController : Controller
     cls_supplier s = new cls_supplier();
     E_CommerceDbContext _context = new E_CommerceDbContext();
     cls_status st = new cls_status();
+    cls_product p = new cls_product();
 
     public IActionResult Login()
     {
@@ -76,6 +77,33 @@ public class AdminController : Controller
                 Value = c.CategoryID.ToString()
             });
     }
+
+    async Task SupplierFill()
+    {
+
+        List<Supplier> suppliers = await s.GetSuppliersAsync();
+        ViewData["suppliersList"] = suppliers
+            .Select(x => new SelectListItem
+            {
+                Text = x.BrandName,
+                Value = x.SupplierID.ToString()
+            });
+    }
+
+
+    async Task StatusFill()
+    {
+
+        List<Status> statuses = await st.GetStatusesAsync();
+        ViewData["statusesList"] = statuses
+            .Select(x => new SelectListItem
+            {
+                Text = x.StatusName,
+                Value = x.StatusID.ToString()
+            });
+    }
+
+
 
     [HttpPost]
     public IActionResult CategoryCreate(Category category)
@@ -233,10 +261,6 @@ public class AdminController : Controller
             string? photoPath = _context.suppliers.FirstOrDefault(x => x.SupplierID == supplier.SupplierID)?.PhotoPath;
             supplier.PhotoPath = photoPath;
         }
-        else
-        {
-
-        }
 
 
         bool answer = cls_supplier.SupplierUpdate(supplier);
@@ -308,9 +332,9 @@ public class AdminController : Controller
     }
 
 
-    public async Task<IActionResult> StatusIndex(int id)
+    public async Task<IActionResult> StatusIndex()
     {
-        List<Status> statuses = await st.GetStatusesAsync(id);
+        List<Status> statuses = await st.GetStatusesAsync();
         return View(statuses);
     }
 
@@ -326,7 +350,7 @@ public class AdminController : Controller
     [HttpPost]
     public IActionResult StatusCreate(Status status)
     {
-        bool answer =  cls_status.StatusInsert(status);
+        bool answer = cls_status.StatusInsert(status);
 
         if (answer)
         {
@@ -426,8 +450,151 @@ public class AdminController : Controller
     }
 
 
+    public async Task<IActionResult> ProductIndex()
+    {
+        var products = await p.GetProductsAsync();
+        return View(products);
+    }
 
 
 
+    [HttpGet]
+    public async Task<IActionResult> ProductCreate()
+    {
 
+        CategoryFill();
+        await SupplierFill();
+        await StatusFill();
+        return View();
+    }
+
+
+    [HttpPost]
+    public IActionResult ProductCreate(Product product)
+    {
+        if (ModelState.IsValid)
+        {
+            bool answer = cls_product.ProductInsert(product);
+
+            if (answer)
+            {
+                TempData["Message"] = "Ürün Ekleme Başarılı";
+
+            }
+            else
+            {
+                TempData["Message"] = "HATA! Ürün Ekleme Başarısız";
+            }
+        }
+        else
+        {
+            TempData["Message"] = "HATA! Zorunlu alanları doldurun";
+        }
+
+
+        return RedirectToAction("ProductCreate");
+    }
+
+  
+    [HttpGet]
+    public async Task<IActionResult> ProductEdit(int id)
+    {
+        CategoryFill();
+        await SupplierFill();
+        await StatusFill();
+
+        if (id == null || _context.products == null)
+        {
+            return NotFound();
+
+        }
+        var product = await p.GetProductDetailsAsync(id);
+
+        return View(product);
+    }
+    [HttpPost]
+    public async Task<IActionResult> ProductEdit(Product product)
+    {
+        var existProduct = await p.GetProductDetailsAsync(product.ProductID);
+
+        if (product.PhotoPath == null)
+        {
+            ////Foto değiştirmezse eski fotoyu al
+            //string? photoPath = _context.products.FirstOrDefault(x => x.ProductID== product.ProductID)?.PhotoPath;
+            product.PhotoPath = existProduct?.PhotoPath;
+        }
+
+        // Backende yollanmayan değerler: Highligted, TopSeller, AddDate
+
+        product.HighLighted = existProduct!.HighLighted;
+        product.TopSeller = existProduct!.TopSeller;
+        product.AddDate = existProduct!.AddDate;
+
+
+        bool answer = cls_product.ProductUpdate(product);
+
+        if (answer)
+        {
+            TempData["Message"] = "Ürün Güncelleme Başarılı";
+            return RedirectToAction("ProductIndex");
+        }
+        else
+        {
+            TempData["Message"] = "HATA! Ürün Güncelleme Başarısız";
+        }
+        return RedirectToAction("ProductEdit");
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> ProductDelete(int? id)
+    {
+
+        if (id == null || _context.products == null)
+        {
+            return NotFound();
+        }
+
+        var product = await _context
+            .products
+            .FirstOrDefaultAsync(x => x.ProductID == id);
+
+        if (product == null)
+        {
+            return NotFound();
+        }
+        return View(product);
+    }
+
+
+    [HttpPost, ActionName("ProductDelete")]
+    public async Task<IActionResult> ProductDeleteConfirmed(int id)
+    {
+        bool answer = cls_product.ProductDelete(id);
+
+        if (answer)
+        {
+            TempData["Message"] = "Ürün Silindi";
+            return RedirectToAction("ProductIndex");
+        }
+        else
+        {
+            TempData["Message"] = "HATA! Ürün Silinemedi";
+        }
+
+        return RedirectToAction("ProductDelete");
+    }
+
+
+    public async Task<IActionResult> ProductDetails(int? id)
+    {
+        if (id is null)
+        {
+            return NotFound();
+        }
+
+        var product = await p.GetProductDetailsAsync(id);
+        ViewBag.product = product?.ProductName;
+        return View(product);
+    }
 }

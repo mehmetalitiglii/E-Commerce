@@ -7,6 +7,7 @@ namespace E_Commerce_Website_Project.Models;
 public class Product
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [DisplayName("ID")]
     public int ProductID { get; set; }
 
     [Required]
@@ -57,7 +58,7 @@ public class Product
 
     public int TopSeller { get; set; } //Çok Satan Ürünler
 
-    [DisplayName("Bu Ürüne Bakanlar")]
+    [DisplayName("İlişkili")]
     public int Related { get; set; } //Benzer Ürünler
 
     [DisplayName("Notlar")]
@@ -66,5 +67,5 @@ public class Product
     [DisplayName("Fotoğraf")]
     public string? PhotoPath { get; set; } //Fotoğraf Yolu
 
-    public bool? IsActive { get; set; } //Boolean Değer
+    public bool IsActive { get; set; } //Boolean Değer
 }

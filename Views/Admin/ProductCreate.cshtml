@@ -1,0 +1,180 @@
+﻿@{
+  Layout = "~/Views/Shared/_AdminLayout.cshtml";
+  @model Product
+  ViewData["Title"] = "Ürün Ekle";
+
+
+}
+
+
+<!-- BEGIN SAMPLE FORM PORTLET-->
+<div class="row">
+  <div class="col-md2"></div>
+  <div class="col-md-8">
+    <div class="portlet box purple ">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-gift"></i> Ürün Giriş Formu
+        </div>
+        <div class="tools">
+          <a href="" class="collapse">
+          </a>
+          <a href="#portlet-config" data-toggle="modal" class="config">
+          </a>
+          <a href="" class="reload">
+          </a>
+          <a href="" class="remove">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body form">
+        <form class="form-horizontal" role="form" action="/Admin/ProductCreate" method="post">
+          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          <div class="form-body">
+
+
+
+            <div class="form-group">
+              <label asp-for="ProductName" class="col-md-3 control-label">Ürün Adı</label>
+
+              <div class="col-md-9">
+                <input asp-for="ProductName" class="form-control input-lg" placeholder="Ürün Adı" required maxlength="100">
+                @*                 <input type="text" class="form-control input-lg" name="" placeholder="Kategori Adı" required maxlength="50">
+ *@              </div>
+              <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="UnitPrice" class="col-md-3 control-label">Fiyat</label>
+
+              <div class="col-md-9">
+                <input asp-for="UnitPrice" class="form-control input-lg" placeholder="Fiyat" required>
+                @*                 <input type="text" class="form-control input-lg" name="" placeholder="Kategori Adı" required maxlength="50">
+ *@              </div>
+              <span asp-validation-for="UnitPrice" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Kategori Seçiniz</label>
+              <div class="col-md-9">
+                @Html.DropDownList(
+                       "CategoryID",
+                       (IEnumerable<SelectListItem>?)ViewData["CategoryList"], "Seçiniz",
+                       new { @class = "form-control input-lg", @required = "required" }
+                       )
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Marka Seçiniz</label>
+              <div class="col-md-9">
+                @Html.DropDownList(
+                       "SupplierID",
+                       (IEnumerable<SelectListItem>?)ViewData["suppliersList"], "Seçiniz",
+                       new { @class = "form-control input-lg", @required = "required" }
+                       )
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="Stock" class="col-md-3 control-label"></label>
+
+              <div class="col-md-9">
+                <input asp-for="Stock" class="form-control input-lg" placeholder="Stok" required>
+                @*                 <input type="text" class="form-control input-lg" name="" placeholder="Kategori Adı" required maxlength="50">
+ *@              </div>
+              <span asp-validation-for="Stock" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+              <label asp-for="Discount" class="col-md-3 control-label"></label>
+
+              <div class="col-md-9">
+                <input asp-for="Discount" class="form-control input-lg" placeholder="İndirim(%)" required>
+                @*                 <input type="text" class="form-control input-lg" name="" placeholder="Kategori Adı" required maxlength="50">
+ *@              </div>
+              <span asp-validation-for="Discount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Durum Seçiniz</label>
+              <div class="col-md-9">
+                @Html.DropDownList(
+                       "StatusID",
+                       (IEnumerable<SelectListItem>?)ViewData["statusesList"], "Seçiniz",
+                       new { @class = "form-control input-lg", @required = "required" }
+                       )
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="Keywords" class="col-md-3 control-label"></label>
+
+              <div class="col-md-9">
+                <input asp-for="Keywords" class="form-control input-lg" placeholder="Anahtar Kelimeler" required>
+                @*                 <input type="text" class="form-control input-lg" name="" placeholder="Kategori Adı" required maxlength="50">
+ *@              </div>
+              <span asp-validation-for="Keywords" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="Kdv" class="col-md-3 control-label"></label>
+
+              <div class="col-md-9">
+                <input asp-for="Kdv" class="form-control input-lg" placeholder="KDV" required>
+                @*                 <input type="text" class="form-control input-lg" name="" placeholder="Kategori Adı" required maxlength="50">
+ *@              </div>
+              <span asp-validation-for="Kdv" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="Related" class="col-md-3 control-label"></label>
+
+              <div class="col-md-9">
+                <input asp-for="Related" class="form-control input-lg" placeholder="Buna Bakanlar" required>
+                @*                 <input type="text" class="form-control input-lg" name="" placeholder="Kategori Adı" required maxlength="50">
+ *@              </div>
+              <span asp-validation-for="Related" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="Notes" class="col-md-3 control-label"></label>
+
+              <div class="col-md-9">
+                <input asp-for="Notes" class="form-control input-lg" placeholder="Notlar">
+                @*                 <input type="text" class="form-control input-lg" name="" placeholder="Kategori Adı" required maxlength="50">
+*@              </div>
+              <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="PhotoPath" class="col-md-3 control-label"></label>
+
+              <div class="col-md-9">
+                <input type="file" asp-for="PhotoPath" class="form-control input-lg" required />
+              </div>
+              <span asp-validation-for="PhotoPath" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="IsActive" class="col-md-3 control-label">Aktif</label>
+
+              <div class="col-md-9">
+                <input asp-for="IsActive" class="form-control input-lg" />
+              </div>
+            </div>
+
+          </div>
+          <div class="form-actions right">
+            <a asp-action="ProductIndex" class="btn btn-primary">Ürün Listesi</a>
+            <input type="submit" value="KAYDET" class="btn btn-success" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- END SAMPLE FORM PORTLET-->

@@ -801,16 +801,18 @@ body.page-header-fixed {
 	position: absolute;
 	top: -40px;
 	right: 10px;
+	
 }
-.owl-buttons div {
-	display: inline-block;
-	width: 26px;
-	height: 26px;
-	margin-left: 5px;
-	position: static;
-	border-radius: 26px !important;
-	text-indent: -100000px;
-}
+	.owl-buttons div {
+		display: inline-block;
+		width: 26px;
+		height: 26px;
+		margin-left: 5px;
+		position: static;
+		border-radius: 26px !important;
+		text-indent: -100000px;
+		padding-right: 15px;
+	}
 .owl-buttons .owl-prev {
     background: #fff url(../img/fa-angles.png) no-repeat 8px 8px;
 }

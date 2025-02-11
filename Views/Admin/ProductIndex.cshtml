@@ -1,0 +1,192 @@
+﻿@{
+  Layout = "~/Views/Shared/_AdminLayout.cshtml";
+  @model IEnumerable<Product>
+  ViewData["Title"] = "Ürün Listesi";
+  E_CommerceDbContext db = new E_CommerceDbContext();
+  // @inject E_Commerce_Website_Project.Models.E_CommerceDbContext context
+}
+
+
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <p>
+      <a asp-action="ProductCreate" asp-controller="Admin" class="btn btn-success">
+        Yeni Ürün
+
+      </a>
+    </p>
+    <!-- BEGIN SAMPLE TABLE PORTLET-->
+    <div class="portlet box red">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-cogs"></i>Ürünler
+        </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse">
+          </a>
+          <a href="#portlet-config" data-toggle="modal" class="config">
+          </a>
+          <a href="javascript:;" class="reload">
+          </a>
+          <a href="javascript:;" class="remove">
+          </a>
+        </div>
+      </div>
+
+      <div class="portlet-body">
+        <div class="table-scrollable">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.ProductID)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.ProductName)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.UnitPrice)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.CategoryID)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.SupplierID)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.Stock)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.StatusID)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.Related)
+                </th>
+                <th>
+                  @Html.DisplayNameFor(Model => Model.IsActive)
+                </th>
+
+                <th></th>
+
+                <th></th>
+
+                <th></th>
+
+              </tr>
+            </thead>
+            <tbody>
+
+              @foreach (var item in Model)
+              {
+                <tr ->
+                  <td>
+                    @Html.DisplayFor(Model => item.ProductID)
+                  </td>
+
+                  <td>
+                    @Html.DisplayFor(Model => item.ProductName)
+                  </td>
+                  <td>
+                    @string.Format("{0:#,##0.00}", item.UnitPrice) &#8378;
+                  </td>
+                  <td>
+                    @{
+                      string? categoryName = db.categories
+                      .FirstOrDefault(x=>x.CategoryID == item.CategoryID)?.CategoryName;
+                      @categoryName
+                    }
+                  </td>
+                  <td>
+                    @{
+                      string? supplierName = db.suppliers
+                      .FirstOrDefault(x=>x.SupplierID == item.SupplierID)?.BrandName;
+                        @supplierName
+                    }
+                  </td>
+                  <td>
+                    @Html.DisplayFor(Model => item.Stock)
+                  </td>
+                  <td>
+
+                    @if (item.StatusID == 1)
+                    {
+                      <span style="background-color:red; color:white">Slider(@Html.DisplayFor(Model => item.StatusID))</span>
+                    }
+                    else if (item.StatusID == 2)
+                    {
+                      <span style="background-color:orange; color:black">Özel Ürünler(@Html.DisplayFor(Model => item.StatusID))</span>
+                    }
+                    else if (item.StatusID == 3)
+                    {
+                      <span style="background-color:yellow; color:black">Yıldızlı Ürünler(@Html.DisplayFor(Model => item.StatusID))</span>
+                    }
+                    else if (item.StatusID == 4)
+                    {
+                      <span style="background-color:blue; color:white">Fırsat Ürünler(@Html.DisplayFor(Model => item.StatusID))</span>
+                    }
+                    else if (item.StatusID == 5)
+                    {
+                      <span style="background-color:brown; color:white">Dikkat Çeken Ürünler(@Html.DisplayFor(Model => item.StatusID))</span>
+                    }
+                    else if (item.StatusID == 6)
+                    {
+                      <span style="background-color:blueviolet; color:white">Günün Ürünü(@Html.DisplayFor(Model => item.StatusID))</span>
+                    }
+                    else
+                    {
+                      <span style="background-color:black; color:white">@Html.DisplayFor(Model => item.StatusID)</span>
+                    }
+                  </td>
+                  <td>
+
+                    @if (item.Related == 1)
+                    {
+                      <span style="background-color:red; color:white">@Html.DisplayFor(Model => item.Related)</span>
+                    }
+                    else if (item.Related == 2)
+                    {
+                      <span style="background-color:orange; color:black">@Html.DisplayFor(Model => item.Related)</span>
+                    }
+                    else if (item.Related == 3)
+                    {
+                      <span style="background-color:yellow; color:black">@Html.DisplayFor(Model => item.Related)</span>
+                    }
+                    else if (item.Related == 4)
+                    {
+                      <span style="background-color:blue; color:white">@Html.DisplayFor(Model => item.Related)</span>
+                    }
+                    else
+                    {
+                      <span style="background-color:black; color:white">@Html.DisplayFor(Model => item.StatusID)</span>
+
+                    }
+                  </td>
+                  <td>
+                    <input type="checkbox" name="IsActive" @(item.IsActive ? "checked" : "") disabled />
+                  </td>
+                  <td>
+                    <a asp-action="ProductEdit" asp-route-id="@item.ProductID" class="btn btn-primary">
+                      DÜZENLE
+                    </a>
+                  </td>
+                  <td>
+                    <a asp-action="ProductDetails" asp-route-id="@item.ProductID" class="btn btn-info">
+                      DETAY
+                    </a>
+                  </td>
+                  <td>
+                    <a asp-action="ProductDelete" asp-route-id="@item.ProductID" class="btn btn-danger">
+                      SİL
+                    </a>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- END SAMPLE TABLE PORTLET-->
+  </div>
+</div>
