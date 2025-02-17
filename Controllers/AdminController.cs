@@ -68,7 +68,6 @@ public class AdminController : Controller
     }
     void CategoryFill()
     {
-
         List<Category> categories = c.GetMainCategories();
         ViewData["CategoryList"] = categories
             .Select(c => new SelectListItem
@@ -121,10 +120,7 @@ public class AdminController : Controller
         }
         return RedirectToAction("CategoryCreate");
     }
-
-
-
-    public async Task<IActionResult> CategoryEdit(int id)
+ public async Task<IActionResult> CategoryEdit(int id)
     {
         CategoryFill();
 
@@ -143,7 +139,7 @@ public class AdminController : Controller
     public IActionResult CategoryEdit(Category category)
     {
         bool answer = cls_category.CategoryUpdate(category);
-
+        
         if (answer)
         {
             TempData["Message"] = "Kategori Güncelleme Başarılı";

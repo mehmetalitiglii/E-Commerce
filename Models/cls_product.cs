@@ -123,7 +123,43 @@ public class cls_product
         else if (mainpageName is "SpecialProducts")
         {
             //Özel ürünleri getir
-            products = _context.products.Where(x => x.StatusID == 2).OrderByDescending(x=> x.AddDate).Take(8).ToList();
+            products = _context.products.Where(x => x.StatusID == 2).OrderByDescending(x => x.AddDate).Take(8).ToList();
+
+        }
+        else if (mainpageName is "StarredProducts")
+        {
+            //yıldızlı ürünleri getir
+            products = _context.products.Where(x => x.StatusID == 3).OrderByDescending(x => x.AddDate).Take(8).ToList();
+
+        }  
+        else if (mainpageName is "FeaturedProducts")
+        {
+            //Fırsat ürünleri getir
+            products = _context.products.Where(x => x.StatusID == 4).OrderByDescending(x => x.AddDate).Take(8).ToList();
+
+        } 
+        else if (mainpageName is "DiscountedProducts")
+        {
+            //İndirimli ürünleri getir
+            products = _context.products.Where(x => x.Discount > 0).OrderByDescending(x=> x.Discount).Take(8).ToList();
+
+        }
+        else if (mainpageName is "HighlightedProducts")
+        {
+            //Öne Çıkan ürünleri getir
+            products = _context.products.Where(x => x.HighLighted > 0).OrderByDescending(x=> x.HighLighted).Take(8).ToList();
+
+        }    
+        else if (mainpageName is "TopSellerProducts")
+        {
+            //Çok Satan ürünleri getir
+            products = _context.products.Where(x => x.TopSeller > 0).OrderByDescending(x=> x.TopSeller).Take(8).ToList();
+
+        }   
+        else if (mainpageName is "NotableProducts")
+        {
+            //Dikkat Çeken ürünleri getir
+            products = _context.products.Where(x => x.StatusID == 7).ToList();
 
         }
         else
@@ -137,7 +173,7 @@ public class cls_product
     public Product? GetProductOfDay()
     {
         //Günün ürünleri getir
-       var product = _context.products.FirstOrDefault(x => x.StatusID == 6);
+        var product = _context.products.FirstOrDefault(x => x.StatusID == 6);
 
         return product;
     }

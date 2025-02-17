@@ -86,15 +86,12 @@ public class cls_category
         {
             try
             {
-                Category? category = _context
-                    .categories
-                    .FirstOrDefault(x => x.CategoryID == catID);
+                var categories = _context.categories.Find(catID);
+                categories!.IsActive = false;
 
-                category!.IsActive = false;
-               List<Category> subCategories = _context.categories.Where(x => x.ParentID == catID).ToList();
+                var subcategories = _context.categories.Where(x=> x.ParentID == catID).ToList();
 
-
-                foreach (var item in subCategories)
+                foreach (var item in subcategories)
                 {
                     item.IsActive = false;
                 }
@@ -109,8 +106,4 @@ public class cls_category
             }
         }
     }
-
-
-
-
 }
