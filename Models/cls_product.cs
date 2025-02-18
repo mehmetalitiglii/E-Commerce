@@ -106,60 +106,71 @@ public class cls_product
     }
 
 
-    public List<Product> GetProducts(string mainpageName)
+    public List<Product> GetProducts(string mainpageName, string SubPageName)
     {
         List<Product> products;
 
         if (mainpageName is "SliderProducts")
         {
             //slider ürünleri getir
-            products = _context.products.Where(x => x.StatusID == 1).Take(8).ToList();
+            products = _context.products.Where(x => x.StatusID == 1 && x.IsActive == true).Take(8).ToList();
         }
         else if (mainpageName is "NewProducts")
         {
             //yeni ürünleri getir
-            products = _context.products.OrderByDescending(x => x.AddDate).Take(8).ToList();
+            if (SubPageName == "index")
+            {
+                //home indexinde çalışması için
+                products = _context.products.Where(x => x.IsActive == true).OrderByDescending(x => x.AddDate).Take(8).ToList();
+
+            }
+            else
+            {
+                //new products için çalışacak
+                products = _context.products.Where(x => x.IsActive == true).OrderByDescending(x => x.AddDate).Take(4).ToList();
+            }
+
         }
         else if (mainpageName is "SpecialProducts")
         {
             //Özel ürünleri getir
-            products = _context.products.Where(x => x.StatusID == 2).OrderByDescending(x => x.AddDate).Take(8).ToList();
+            products = _context.products.Where(x => x.StatusID == 2 && x.IsActive == true).OrderByDescending(x => x.AddDate).Take(8).ToList();
 
         }
         else if (mainpageName is "StarredProducts")
         {
             //yıldızlı ürünleri getir
-            products = _context.products.Where(x => x.StatusID == 3).OrderByDescending(x => x.AddDate).Take(8).ToList();
+            products = _context.products.Where(x => x.StatusID == 3 && x.IsActive == true).OrderByDescending(x => x.AddDate).Take(8).ToList();
 
         }  
         else if (mainpageName is "FeaturedProducts")
         {
             //Fırsat ürünleri getir
-            products = _context.products.Where(x => x.StatusID == 4).OrderByDescending(x => x.AddDate).Take(8).ToList();
+            products = _context.products.Where(x => x.StatusID == 4 && x.IsActive == true).OrderByDescending(x => x.AddDate).Take(8).ToList();
 
         } 
         else if (mainpageName is "DiscountedProducts")
         {
             //İndirimli ürünleri getir
-            products = _context.products.Where(x => x.Discount > 0).OrderByDescending(x=> x.Discount).Take(8).ToList();
+            products = _context.products.Where(x => x.Discount > 0 && x.IsActive == true).OrderByDescending(x=> x.Discount).Take(8).ToList();
 
         }
         else if (mainpageName is "HighlightedProducts")
         {
             //Öne Çıkan ürünleri getir
-            products = _context.products.Where(x => x.HighLighted > 0).OrderByDescending(x=> x.HighLighted).Take(8).ToList();
+            products = _context.products.Where(x => x.HighLighted > 0 && x.IsActive == true).OrderByDescending(x=> x.HighLighted).Take(8).ToList();
 
         }    
         else if (mainpageName is "TopSellerProducts")
         {
             //Çok Satan ürünleri getir
-            products = _context.products.Where(x => x.TopSeller > 0).OrderByDescending(x=> x.TopSeller).Take(8).ToList();
+            products = _context.products.Where(x => x.TopSeller > 0 && x.IsActive == true ).OrderByDescending(x=> x.TopSeller).Take(8).ToList();
 
         }   
         else if (mainpageName is "NotableProducts")
         {
             //Dikkat Çeken ürünleri getir
-            products = _context.products.Where(x => x.StatusID == 7).ToList();
+            products = _context.products.Where(x => x.StatusID == 7 && x.IsActive == true).ToList();
 
         }
         else

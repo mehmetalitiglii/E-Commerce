@@ -26,17 +26,26 @@ public class HomeController : Controller
     
     public IActionResult Index()
     {
-        MainPageModel.SliderProducts = cls_Product.GetProducts("SliderProducts");
-        MainPageModel.NewProducts = cls_Product.GetProducts("NewProducts");
+        MainPageModel.SliderProducts = cls_Product.GetProducts("SliderProducts", "Index");
+        MainPageModel.NewProducts = cls_Product.GetProducts("NewProducts", "Index");
         //_context.products.Where(x => x.StatusID == 1).ToList();
         MainPageModel.ProductOfDay = cls_Product.GetProductOfDay();
-        MainPageModel.SpecialProducts = cls_Product.GetProducts("SpecialProducts");
-        MainPageModel.StarredProducts = cls_Product.GetProducts("StarredProducts");
-        MainPageModel.FeaturedProducts = cls_Product.GetProducts("FeaturedProducts");
-        MainPageModel.DiscountedProducts = cls_Product.GetProducts("DiscountedProducts");
-        MainPageModel.HighlightedProducts = cls_Product.GetProducts("HighlightedProducts");
-        MainPageModel.TopSellerProducts = cls_Product.GetProducts("TopSellerProducts");
-        MainPageModel.NotableProducts = cls_Product.GetProducts("NotableProducts");
+        MainPageModel.SpecialProducts = cls_Product.GetProducts("SpecialProducts", "Index");
+        MainPageModel.StarredProducts = cls_Product.GetProducts("StarredProducts", "Index");
+        MainPageModel.FeaturedProducts = cls_Product.GetProducts("FeaturedProducts", "Index");
+        MainPageModel.DiscountedProducts = cls_Product.GetProducts("DiscountedProducts", "Index");
+        MainPageModel.HighlightedProducts = cls_Product.GetProducts("HighlightedProducts", "Index");
+        MainPageModel.TopSellerProducts = cls_Product.GetProducts("TopSellerProducts", "Index"  );
+        MainPageModel.NotableProducts = cls_Product.GetProducts("NotableProducts", "Index"  );
+
+        return View(MainPageModel);
+    }
+
+    public IActionResult NewProducts()
+    {
+        MainPageModel.NewProducts = cls_Product.GetProducts("NewProducts", "new"); // menüden yeni ürünlere tıklanınca yeni ürünler sayfasına gidecek.
+
+
 
         return View(MainPageModel);
     }
@@ -63,12 +72,5 @@ public class HomeController : Controller
     public IActionResult Cart()
     {
         return View();
-    }
-
-    public IActionResult NewProducts()
-    { 
-    return View();
-
-
     }
 }
